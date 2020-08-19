@@ -1,0 +1,179 @@
+<template lang="pug">
+.card-box
+  .card
+  .text 70年砥砺奋进，70年破浪前行。2019年是新中国成立70周年，中国成就备受世界瞩目。这一年，习近平主席在多个国内外高光时刻讲述中国发展故事，以坚定自信的政治气魄、大国领袖的责任担当深入思考人类前途命运，引领自信的中国阔步走向世界。
+  img.arrow-right-1(src="@|arrow-right.png|" o-animation="shrink" go="page2//scaleDown/scaleUpDown/true")
+</template>
+
+<script>
+  module.exports = {
+    data: {
+      roomInfo: null,
+      joinMoney: 5,
+      roomName: '',
+      dakaTime: ''
+    },
+    created: function () {
+        if (window.innerWidth > window.innerHeight) {
+          this.flayIt(document.querySelector('.card'), {
+            imageWidth: 1920,
+            imageHeight: 1080,
+            blockNum: 8,
+            imageUrl: '@|bg.jpg|',
+            rotate: window.innerWidth > window.innerHeight ? false : true
+          })
+        } else {
+          this.flayIt(document.querySelector('.card'), {
+            imageWidth: 1920,
+            imageHeight: 1080,
+            blockNum: 8,
+            imageUrl: '@|bg.jpg|',
+            rotate: window.innerWidth > window.innerHeight ? false : true
+          })
+        }
+    },
+    flayIt: function (dom, config) {
+        if (window.navigator.userAgent.indexOf("MSIE") >= 1) {
+            dom.style.width = '100%'
+            dom.style.height = '100%'
+            dom.style.backgroundImage = 'url("' + config.imageUrl +'")'
+        } else {
+            dom.classList.add('crunch-ani')
+            dom.style.display = 'flex'
+            var innerWidth = config.rotate ? window.innerHeight : window.innerWidth
+            var innerHeight = config.rotate ? window.innerWidth : window.innerHeight
+            // console.log(innerWidth, innerHeight)
+            var zoomW = innerWidth / config.imageWidth
+            var zoomY = innerHeight / config.imageHeight
+            var zoom = zoomW > zoomY ? zoomW : zoomY
+            config.imageWidth = parseInt(config.imageWidth * zoom)
+            config.imageHeight = parseInt(config.imageHeight * zoom)
+            dom.style.opacity = 0
+            dom.style.left = (innerWidth - config.imageWidth) / 2 + 'px'
+            var blockHtml = ''
+            
+            for (var index = 0; index < config.blockNum; index++) {
+                var blockWeight = config.imageWidth / config.blockNum
+                var hideHeight = (innerHeight - config.imageHeight)
+                blockHtml += '<div class="fold" style="width: ' + blockWeight + 'px;background-size: ' + config.imageWidth + 'px auto;background-image: url(' + config.imageUrl +');background-position: ' + (-parseInt(blockWeight * index)) + 'px ' + hideHeight + 'px;"></div>'
+            }
+            // if (config.blockNum)
+            dom.innerHTML = blockHtml
+            dom.style.width = config.imageWidth + 'px'
+            dom.style.height = config.imageHeight + 'px'
+            setTimeout(() => {
+                dom.style.opacity = 1
+                setTimeout( () => {
+                    this.query('.text').style.opacity = 1
+                }, 5500);
+            }, 0);
+        }
+    }
+  }
+</script>
+
+
+<style lang="less">
+@-webkit-keyframes crunch {
+  0% {
+    -webkit-transform: scale(0.6);
+            transform: scale(0.6);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes crunch {
+  0% {
+    -webkit-transform: scale(0.6);
+            transform: scale(0.6);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+.crunch-ani {
+  display: -webkit-box;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -webkit-animation: crunch 4s 0s ease-in-out 1;
+  animation: crunch 4s 0s ease-in-out 1;
+}
+
+.fold {
+  width: 20%;
+  height: 100%;
+  background-repeat: no-repeat;
+  -webkit-box-flex: 1;
+          flex: 1;
+  background-size: cover;
+  -webkit-animation: 4s 0s ease-in-out 1;
+          animation: 4s 0s ease-in-out 1;
+}
+.fold:nth-child(odd) {
+  -webkit-animation-name: odd-fold;
+          animation-name: odd-fold;
+}
+@-webkit-keyframes odd-fold {
+  50% {
+    -webkit-transform: skewY(15deg);
+            transform: skewY(15deg);
+    -webkit-filter: brightness(1.25);
+            filter: brightness(1.25);
+  }
+}
+@keyframes odd-fold {
+  50% {
+    -webkit-transform: skewY(15deg);
+            transform: skewY(15deg);
+    -webkit-filter: brightness(1.25);
+            filter: brightness(1.25);
+  }
+}
+.fold:nth-child(even) {
+  -webkit-animation-name: even-fold;
+          animation-name: even-fold;
+}
+@-webkit-keyframes even-fold {
+  50% {
+    -webkit-transform: skewY(-15deg);
+            transform: skewY(-15deg);
+    -webkit-filter: brightness(0.75);
+            filter: brightness(0.75);
+  }
+}
+@keyframes even-fold {
+  50% {
+    -webkit-transform: skewY(-15deg);
+            transform: skewY(-15deg);
+    -webkit-filter: brightness(0.75);
+            filter: brightness(0.75);
+  }
+}
+.text {
+  color: #23487a;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 1000px;
+  bottom: 30px;
+  font-size: 20px;
+  line-height: 1.7;
+  text-indent: 2em;
+  opacity: 0;
+  transition: opacity 2s;
+}
+.arrow-right-1 {
+  position: absolute;
+  right: 5%;
+  top: 3%;
+  bottom: 0;
+  margin: auto;
+  cursor: pointer;
+}
+</style>

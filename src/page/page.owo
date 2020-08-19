@@ -1,0 +1,228 @@
+<template lang="pug">
+.home
+  .scale-box-pc
+    img.logo(src="@|logo.png|")
+    ul.menu-list
+    .pagination
+    .swiper-container
+      .swiper-wrapper
+        .swiper-slide
+          .edit 西藏
+          h1 内蒙古：绿富同兴 小康路宽
+          .lr-box.clear
+            .fl
+              img(src="@|show.png|")
+            ul.fr
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+              li
+                a(href="#" target="_blank") 数字化赋能美好生活
+        .swiper-slide
+          .edit 内蒙古
+          h2 内蒙古
+          .info-box.clear
+            .fl
+              img(src="@|show.png|")
+            .fr 当前我国仍处于汛期，预计后期台风降雨、局地暴雨、华西秋雨等仍可能造成严重汛情。”叶建春介绍，水利部将继续以超标洪水、水库失事、山洪灾害这三大风险为防范重点，全力做好水旱灾害防御工作，保障人民生命财产安全水利部将继续以超标洪水、水库失事、山洪灾害这三大风险为防范重点，。
+        .swiper-slide
+          .edit 新疆
+          h2 新疆
+          .info-box.clear
+            .fl
+              img(src="@|show.png|")
+            .fr 当前我国仍处于汛期，预计后期台风降雨、局地暴雨、华西秋雨等仍可能造成严重汛情。”叶建春介绍，水利部将继续以超标洪水、水库失事、山洪灾害这三大风险为防范重点，全力做好水旱灾害防御工作，保障人民生命财产安全水利部将继续以超标洪水、水库失事、山洪灾害这三大风险为防范重点，。
+
+</template>
+
+<script>
+  module.exports = {
+    data: {
+      swiper: null
+    },
+    created: function () {
+      this.data.swiper = new Swiper('.swiper-container',{
+        pagination : '.pagination'
+      })
+      let newHtml = ''
+      // console.log(this.queryAll('.swiper-slide .edit'))
+      for (let index = 0; index < this.queryAll('.swiper-slide .edit').length; index++) {
+        const element = this.queryAll('.swiper-slide .edit')[index];
+        newHtml += `<li o-tap="changeIndex(${index})">${element.innerHTML}</li>`
+        
+      }
+      this.query('.menu-list').innerHTML = newHtml
+      setTimeout(() => {
+        this.handleEvent(this, this.query('.menu-list'))
+      }, 100);
+      this.query('.menu-list li').classList.add('active')
+    },
+    "changeIndex": function (index) {
+      this.queryAll('.menu-list li').forEach(element => {
+        element.classList.remove('active')
+      });
+      this.$target.classList.add('active')
+      this.data.swiper.swipeTo(index)
+    },
+  }
+</script>
+
+
+<style lang="less">
+.home {
+  background-image: url('@|bg-2.jpg|');
+  background-size: cover;
+}
+.swiper-container {
+  width: 1000px;
+  height: 630px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.swiper-slide {
+  h1 {
+    color: #00496b;
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-family: "Microsoft YaHei";
+    line-height: 80px;
+  }
+  h2 {
+    color: white;
+    line-height: 80px;
+    font-size: 40px;
+    text-align: right;
+  }
+}
+.lr-box {
+  background-color: #00496b;
+  .fl {
+    img {
+      display: block;
+      width: 692px;
+      height: 550px;
+    }
+  }
+  .fr {
+    width: 287px;
+    padding: 10px 10px;
+    color: white;
+    height: 530px;
+    overflow: auto;
+    li {
+      line-height: 40px;
+      font-size: 17px;
+      border-bottom: 1px solid white;
+    }
+    a {
+      display: block;
+      color: white;
+    }
+    a:hover {
+      text-decoration: none;
+      color: #ffed8a;
+    }
+  }
+}
+.logo {
+  position: absolute;
+  right: 180px;
+  top: 210px;
+}
+.edit {
+  display: none;
+}
+.info-box {
+  .fr {
+    background-image: url('@|right.png|');
+    width: 248px;
+    height: 470px;
+    color: white;
+    padding: 40px 30px;
+    font-size: 17px;
+    text-indent: 2em;
+    line-height: 1.7;
+  }
+  .fl {
+    width: 692px;
+    height: 550px;
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+.menu-list {
+  width: 300px;
+  position: absolute;
+  right: 123px;
+  top: 383px;
+  font-size: 26px;
+  color: white;
+  line-height: 50px;
+  height: 472px;
+  li {
+    cursor: pointer;
+  }
+  li.active {
+    color: #febf00;
+  }
+  li:hover {
+    color: #d4bc70;
+  }
+}
+.pagination {
+  position: absolute;
+  top: 890px;
+  width: 100%;
+  text-align: center;
+  .swiper-pagination-switch {
+    width: 30px;
+    height: 3px;
+    background-color: #59c7ef;
+    display: inline-block;
+    margin: 0 5px;
+    border-radius: 5px;
+  }
+  .swiper-active-switch {
+    background-color: #f6b813;
+  }
+}
+</style>
